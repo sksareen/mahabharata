@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahabharata Episode 1 Storyboard</title>
+    <title>Mahabharata Interactive Comic</title>
     <style>
         * {
             margin: 0;
@@ -15,37 +15,65 @@
             font-family: 'Arial', sans-serif;
             background-color: #1a1a1a;
             color: #fff;
+            overflow: hidden; /* Prevent scrolling */
+            height: 100vh;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
         }
         
         header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 0;
+            padding: 15px 0;
             border-bottom: 1px solid #333;
+            background-color: rgba(26, 26, 26, 0.9);
+            z-index: 10;
         }
         
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
         }
         
-        .storyboard {
+        h2 {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        
+        /* eBook viewer styles */
+        .comic-viewer {
+            flex: 1;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .comic-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+            width: 100%;
         }
         
         .frame {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .frame-content {
+            max-width: 90%;
+            max-height: 85%;
+            position: relative;
             border-radius: 5px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -53,7 +81,8 @@
         
         .frame img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: contain;
             display: block;
         }
         
@@ -61,40 +90,103 @@
             background-color: #333;
             padding: 10px 15px;
             font-size: 1rem;
+            width: 100%;
         }
         
-        .navigation {
+        /* Navigation controls */
+        .page-turn {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 15%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 5;
+        }
+        
+        .page-turn.prev {
+            left: 0;
+        }
+        
+        .page-turn.next {
+            right: 0;
+        }
+        
+        .page-turn:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .navigation-controls {
             position: fixed;
             bottom: 20px;
-            right: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             background-color: rgba(51, 51, 51, 0.8);
-            padding: 10px;
-            border-radius: 5px;
+            padding: 10px 15px;
+            border-radius: 30px;
             z-index: 100;
+            display: flex;
+            gap: 10px;
         }
         
-        .navigation button {
+        .navigation-controls button {
             background-color: #555;
             color: white;
             border: none;
             padding: 8px 15px;
-            margin: 0 5px;
-            border-radius: 3px;
+            border-radius: 20px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         
-        .navigation button:hover {
+        .navigation-controls button:hover {
             background-color: #777;
         }
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px 0;
-            border-top: 1px solid #333;
-            font-size: 0.9rem;
-            color: #888;
+        
+        /* Episode selector */
+        .episode-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .episode-selector select {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* Progress indicator */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            background-color: #555;
+            width: 100%;
+            z-index: 100;
+        }
+        
+        .progress-indicator {
+            height: 100%;
+            background-color: #f5a623;
+            transition: width 0.3s;
+        }
+        
+        /* Page flip animation */
+        .page-flip {
+            animation: flipPage 0.5s ease-in-out;
+        }
+        
+        @keyframes flipPage {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
@@ -102,157 +194,262 @@
     <div class="container">
         <header>
             <h1>Mahabharata</h1>
-            <h2>Episode 1 Storyboard</h2>
+            <h2 id="episode-title">Episode 1</h2>
         </header>
         
-        <div class="storyboard">
-            <div class="frame" id="frame-1">
-                <div class="frame-info">Frame 1</div>
-                <img src="storyboard/ep-1_sb-1.png" alt="Storyboard Frame 1">
+        <div class="comic-viewer">
+            <div class="comic-container" id="comic-container">
+                <!-- Frames will be loaded dynamically -->
             </div>
             
-            <div class="frame" id="frame-2">
-                <div class="frame-info">Frame 2</div>
-                <img src="storyboard/ep-1_sb-2.png" alt="Storyboard Frame 2">
-            </div>
-            
-            <div class="frame" id="frame-3">
-                <div class="frame-info">Frame 3</div>
-                <img src="storyboard/ep-1_sb-3.png" alt="Storyboard Frame 3">
-            </div>
-            
-            <div class="frame" id="frame-4">
-                <div class="frame-info">Frame 4</div>
-                <img src="storyboard/ep-1_sb-4.png" alt="Storyboard Frame 4">
-            </div>
-            
-            <div class="frame" id="frame-5">
-                <div class="frame-info">Frame 5</div>
-                <img src="storyboard/ep-1_sb-5.png" alt="Storyboard Frame 5">
-            </div>
-            
-            <div class="frame" id="frame-6">
-                <div class="frame-info">Frame 6</div>
-                <img src="storyboard/ep-1_sb-6.png" alt="Storyboard Frame 6">
-            </div>
-            
-            <div class="frame" id="frame-7">
-                <div class="frame-info">Frame 7</div>
-                <img src="storyboard/ep-1_sb-7.png" alt="Storyboard Frame 7">
-            </div>
-            
-            <div class="frame" id="frame-8">
-                <div class="frame-info">Frame 8</div>
-                <img src="storyboard/ep-1_sb-8.png" alt="Storyboard Frame 8">
-            </div>
-            
-            <div class="frame" id="frame-9">
-                <div class="frame-info">Frame 9</div>
-                <img src="storyboard/ep-1_sb-9.png" alt="Storyboard Frame 9">
-            </div>
-            
-            <div class="frame" id="frame-10">
-                <div class="frame-info">Frame 10</div>
-                <img src="storyboard/ep-1_sb-10.png" alt="Storyboard Frame 10">
-            </div>
-            
-            <div class="frame" id="frame-11">
-                <div class="frame-info">Frame 11</div>
-                <img src="storyboard/ep-1_sb-11.png" alt="Storyboard Frame 11">
-            </div>
-            
-            <div class="frame" id="frame-12">
-                <div class="frame-info">Frame 12</div>
-                <img src="storyboard/ep-1_sb-12.png" alt="Storyboard Frame 12">
-            </div>
-            
-            <div class="frame" id="frame-12b">
-                <div class="frame-info">Frame 12b</div>
-                <img src="storyboard/ep-1_sb-12b.png" alt="Storyboard Frame 12b">
-            </div>
-            
-            <div class="frame" id="frame-13">
-                <div class="frame-info">Frame 13</div>
-                <img src="storyboard/ep-1_sb-13.png" alt="Storyboard Frame 13">
-            </div>
-            
-            <div class="frame" id="frame-14">
-                <div class="frame-info">Frame 14</div>
-                <img src="storyboard/ep-1_sb-14.png" alt="Storyboard Frame 14">
-            </div>
-            
-            <div class="frame" id="frame-15">
-                <div class="frame-info">Frame 15</div>
-                <img src="storyboard/ep-1_sb-15.png" alt="Storyboard Frame 15">
-            </div>
-            
-            <div class="frame" id="frame-16">
-                <div class="frame-info">Frame 16</div>
-                <img src="storyboard/ep-1_sb-16.png" alt="Storyboard Frame 16">
-            </div>
+            <button class="page-turn prev" id="prev-page" aria-label="Previous page"></button>
+            <button class="page-turn next" id="next-page" aria-label="Next page"></button>
         </div>
         
-        <div class="navigation">
-            <button id="btn-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Top</button>
-            <button id="btn-next" onclick="scrollToNextFrame()">Next Frame</button>
+        <div class="episode-selector">
+            <select id="episode-select">
+                <option value="1">Episode 1</option>
+                <option value="2">Episode 2</option>
+                <option value="3">Episode 3</option>
+                <!-- More episodes can be added here -->
+            </select>
         </div>
         
-        <footer>
-            <p>Mahabharata Episode 1 Storyboard Viewer</p>
-        </footer>
+        <div class="navigation-controls">
+            <button id="btn-first">First</button>
+            <button id="btn-prev">Previous</button>
+            <button id="btn-next">Next</button>
+            <button id="btn-last">Last</button>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-indicator" id="progress-indicator"></div>
+        </div>
     </div>
 
     <script>
-        // Function to scroll to the next frame
-        function scrollToNextFrame() {
-            const frames = document.querySelectorAll('.frame');
-            let currentFrameIndex = -1;
+        // Frame data structure - in a real implementation, this would be loaded from a JSON file
+        const episodes = {
+            1: {
+                title: "Episode 1",
+                frames: [
+                    { id: "frame-1", src: "storyboard/ep-1_sb-1.png" },
+                    { id: "frame-2", src: "storyboard/ep-1_sb-2.png" },
+                    { id: "frame-3", src: "storyboard/ep-1_sb-3.png" },
+                    { id: "frame-4", src: "storyboard/ep-1_sb-4.png" },
+                    { id: "frame-5", src: "storyboard/ep-1_sb-5.png" },
+                    { id: "frame-6", src: "storyboard/ep-1_sb-6.png" },
+                    { id: "frame-7", src: "storyboard/ep-1_sb-7.png" },
+                    { id: "frame-8", src: "storyboard/ep-1_sb-8.png" },
+                    { id: "frame-9", src: "storyboard/ep-1_sb-9.png" },
+                    { id: "frame-10", src: "storyboard/ep-1_sb-10.png" },
+                    { id: "frame-11", src: "storyboard/ep-1_sb-11.png" },
+                    { id: "frame-12", src: "storyboard/ep-1_sb-12.png" },
+                    { id: "frame-12b", src: "storyboard/ep-1_sb-12b.png" },
+                    { id: "frame-13", src: "storyboard/ep-1_sb-13.png" },
+                    { id: "frame-14", src: "storyboard/ep-1_sb-14.png" },
+                    { id: "frame-15", src: "storyboard/ep-1_sb-15.png" },
+                    { id: "frame-16", src: "storyboard/ep-1_sb-16.png" }
+                ]
+            },
+            // Add more episodes as needed
+            2: {
+                title: "Episode 2",
+                frames: [
+                    { id: "frame-1", src: "storyboard/ep-2_sb-1.png" }
+                    // Add frames for episode 2
+                ]
+            }
+        };
+        
+        // State variables
+        let currentEpisode = 1;
+        let currentFrameIndex = 0;
+        
+        // DOM Elements
+        const comicContainer = document.getElementById('comic-container');
+        const episodeTitle = document.getElementById('episode-title');
+        const progressIndicator = document.getElementById('progress-indicator');
+        const episodeSelect = document.getElementById('episode-select');
+        
+        // Initialize the comic viewer
+        function initComicViewer() {
+            loadEpisode(currentEpisode);
             
-            // Find which frame is currently most visible in the viewport
-            const viewportHeight = window.innerHeight;
-            const scrollPosition = window.scrollY;
-            let maxVisiblePercentage = 0;
+            // Set up event listeners
+            document.getElementById('prev-page').addEventListener('click', prevFrame);
+            document.getElementById('next-page').addEventListener('click', nextFrame);
+            document.getElementById('btn-first').addEventListener('click', goToFirstFrame);
+            document.getElementById('btn-prev').addEventListener('click', prevFrame);
+            document.getElementById('btn-next').addEventListener('click', nextFrame);
+            document.getElementById('btn-last').addEventListener('click', goToLastFrame);
+            episodeSelect.addEventListener('change', changeEpisode);
             
-            frames.forEach((frame, index) => {
-                const rect = frame.getBoundingClientRect();
-                const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
-                const visiblePercentage = visibleHeight / frame.offsetHeight;
+            // Keyboard navigation
+            document.addEventListener('keydown', handleKeyNavigation);
+            
+            // Touch events for mobile swiping
+            setupSwipeNavigation();
+            
+            // Update progress indicator
+            updateProgressIndicator();
+        }
+        
+        // Load frames for a specific episode
+        function loadEpisode(episodeNum) {
+            // Clear current frames
+            comicContainer.innerHTML = '';
+            
+            // Get episode data
+            const episode = episodes[episodeNum];
+            if (!episode) return;
+            
+            // Update episode title
+            episodeTitle.textContent = episode.title;
+            
+            // Create frame elements
+            episode.frames.forEach((frame, index) => {
+                const frameElement = document.createElement('div');
+                frameElement.className = 'frame';
+                frameElement.id = frame.id;
                 
-                if (visiblePercentage > maxVisiblePercentage) {
-                    maxVisiblePercentage = visiblePercentage;
-                    currentFrameIndex = index;
-                }
+                frameElement.innerHTML = `
+                    <div class="frame-content">
+                        <div class="frame-info">Frame ${index + 1}</div>
+                        <img src="${frame.src}" alt="Frame ${index + 1}">
+                    </div>
+                `;
+                
+                comicContainer.appendChild(frameElement);
             });
             
-            // Scroll to the next frame if not at the end
-            if (currentFrameIndex < frames.length - 1) {
-                frames[currentFrameIndex + 1].scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+            // Reset to first frame
+            currentFrameIndex = 0;
+            updateFramePosition();
+        }
+        
+        // Update frame position
+        function updateFramePosition() {
+            comicContainer.style.transform = `translateX(-${currentFrameIndex * 100}%)`;
+            updateProgressIndicator();
+        }
+        
+        // Navigation functions
+        function nextFrame() {
+            const totalFrames = episodes[currentEpisode].frames.length;
+            
+            if (currentFrameIndex < totalFrames - 1) {
+                currentFrameIndex++;
+                animatePageFlip();
+                updateFramePosition();
+            } else {
+                // Try to move to next episode
+                if (episodes[currentEpisode + 1]) {
+                    currentEpisode++;
+                    episodeSelect.value = currentEpisode;
+                    loadEpisode(currentEpisode);
+                }
             }
         }
         
-        // Add keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'ArrowDown' || e.code === 'Space') {
-                e.preventDefault();
-                scrollToNextFrame();
-            } else if (e.code === 'ArrowUp') {
-                e.preventDefault();
-                window.scrollBy({
-                    top: -window.innerHeight,
-                    behavior: 'smooth'
-                });
-            } else if (e.code === 'Home') {
-                window.scrollTo({top: 0, behavior: 'smooth'});
-            } else if (e.code === 'End') {
-                window.scrollTo({
-                    top: document.body.scrollHeight,
-                    behavior: 'smooth'
-                });
+        function prevFrame() {
+            if (currentFrameIndex > 0) {
+                currentFrameIndex--;
+                animatePageFlip();
+                updateFramePosition();
+            } else {
+                // Try to move to previous episode's last frame
+                if (episodes[currentEpisode - 1]) {
+                    currentEpisode--;
+                    episodeSelect.value = currentEpisode;
+                    loadEpisode(currentEpisode);
+                    currentFrameIndex = episodes[currentEpisode].frames.length - 1;
+                    updateFramePosition();
+                }
             }
-        });
+        }
+        
+        function goToFirstFrame() {
+            currentFrameIndex = 0;
+            updateFramePosition();
+        }
+        
+        function goToLastFrame() {
+            currentFrameIndex = episodes[currentEpisode].frames.length - 1;
+            updateFramePosition();
+        }
+        
+        function changeEpisode() {
+            currentEpisode = parseInt(episodeSelect.value);
+            loadEpisode(currentEpisode);
+        }
+        
+        // Update progress indicator
+        function updateProgressIndicator() {
+            const totalFrames = episodes[currentEpisode].frames.length;
+            const progress = ((currentFrameIndex + 1) / totalFrames) * 100;
+            progressIndicator.style.width = `${progress}%`;
+        }
+        
+        // Animate page flip
+        function animatePageFlip() {
+            comicContainer.classList.add('page-flip');
+            setTimeout(() => {
+                comicContainer.classList.remove('page-flip');
+            }, 500);
+        }
+        
+        // Handle keyboard navigation
+        function handleKeyNavigation(e) {
+            switch(e.code) {
+                case 'ArrowRight':
+                case 'Space':
+                    e.preventDefault();
+                    nextFrame();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    prevFrame();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    goToFirstFrame();
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    goToLastFrame();
+                    break;
+            }
+        }
+        
+        // Setup swipe navigation for mobile devices
+        function setupSwipeNavigation() {
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeThreshold = 50; // minimum swipe distance
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // Swipe left -> next frame
+                    nextFrame();
+                } else if (touchEndX > touchStartX + swipeThreshold) {
+                    // Swipe right -> previous frame
+                    prevFrame();
+                }
+            }
+        }
+        
+        // Initialize when DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', initComicViewer);
     </script>
 </body>
 </html>
