@@ -6,6 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.comment-form').forEach(form => {
         form.addEventListener('submit', handleCommentSubmit);
     });
+    
+    // Listen for frame changes to show/hide relevant comments
+    document.addEventListener('frameChanged', (e) => {
+        if (e.detail && e.detail.frameId) {
+            showRelevantComments(e.detail.frameId);
+        }
+    });
 });
 
 async function loadAllComments() {
@@ -15,17 +22,47 @@ async function loadAllComments() {
         
         const comments = await response.json();
         
-        // Display comments for each frame
-        Object.keys(comments).forEach(frameId => {
-            displayComments(frameId, comments[frameId]);
-        });
+        // Store comments in a global variable for quick access
+        window.allFrameComments = comments;
+        
+        // Display comments for current frame if available
+        const currentFrameId = getCurrentFrameId();
+        if (currentFrameId) {
+            showRelevantComments(currentFrameId);
+        }
     } catch (error) {
         console.error('Error loading comments:', error);
     }
 }
 
+function getCurrentFrameId() {
+    const activeFrame = document.querySelector('.frame.active');
+    return activeFrame ? activeFrame.id : null;
+}
+
+function showRelevantComments(frameId) {
+    // Hide all comment sections first
+    document.querySelectorAll('.comment-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    // Show only the comment section for the current frame
+    const commentSection = document.getElementById(`comment-section-${frameId}`);
+    if (commentSection) {
+        commentSection.style.display = 'block';
+        
+        // Display comments for this frame
+        if (window.allFrameComments && window.allFrameComments[frameId]) {
+            displayComments(frameId, window.allFrameComments[frameId]);
+        } else {
+            displayComments(frameId, []);
+        }
+    }
+}
+
 function displayComments(frameId, comments) {
     const container = document.getElementById(`comments-${frameId}`);
+    if (!container) return;
     
     // Clear loading text
     container.innerHTML = '';
@@ -87,6 +124,11 @@ async function handleCommentSubmit(event) {
             <small>${new Date(newComment.timestamp).toLocaleString()}</small>
         `;
         container.appendChild(commentEl);
+        
+        // Update the global comments object
+        if (!window.allFrameComments) window.allFrameComments = {};
+        if (!window.allFrameComments[frameId]) window.allFrameComments[frameId] = [];
+        window.allFrameComments[frameId].push(newComment);
         
         // Clear the textarea
         textarea.value = '';

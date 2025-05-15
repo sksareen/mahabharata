@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mahabharata Interactive Comic</title>
+    <link rel="stylesheet" href="css/comments.css">
     <style>
         * {
             margin: 0;
@@ -12,11 +13,12 @@
         }
         
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Georgia', serif;
             background-color: #1a1a1a;
             color: #fff;
             overflow: hidden; /* Prevent scrolling */
             height: 100vh;
+            background-image: url('data:image/png;base64,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');
         }
         
         .container {
@@ -32,16 +34,23 @@
             border-bottom: 1px solid #333;
             background-color: rgba(26, 26, 26, 0.9);
             z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
         
         h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 5px;
+            font-family: 'Georgia', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #f5d393;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
         }
         
         h2 {
             font-size: 1.2rem;
             color: #ccc;
+            font-style: italic;
         }
         
         /* eBook viewer styles */
@@ -51,13 +60,14 @@
             position: relative;
             width: 100%;
             overflow: hidden;
+            perspective: 1200px;
         }
         
         .comic-container {
             display: flex;
-            transition: transform 0.5s ease;
             height: 100%;
             width: 100%;
+            transform-style: preserve-3d;
         }
         
         .frame {
@@ -67,7 +77,27 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateX(100%) rotateY(10deg);
+            pointer-events: none;
+        }
+        
+        .frame.active {
+            opacity: 1;
+            transform: translateX(0) rotateY(0);
+            pointer-events: auto;
+            z-index: 2;
+        }
+        
+        .frame.prev {
+            opacity: 0;
+            transform: translateX(-100%) rotateY(-10deg);
+            z-index: 1;
         }
         
         .frame-content {
@@ -76,7 +106,17 @@
             position: relative;
             border-radius: 5px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+            border: 5px solid #654321;
+            background-color: white;
+            transition: transform 0.5s ease;
+            transform-origin: center center;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .frame:hover .frame-content {
+            transform: scale(1.02);
         }
         
         .frame img {
@@ -87,10 +127,14 @@
         }
         
         .frame-info {
-            background-color: #333;
+            background-color: #654321;
             padding: 10px 15px;
             font-size: 1rem;
             width: 100%;
+            color: #f5d393;
+            font-family: 'Georgia', serif;
+            text-align: center;
+            border-bottom: 2px solid #4a3015;
         }
         
         /* Navigation controls */
@@ -102,7 +146,8 @@
             background: transparent;
             border: none;
             cursor: pointer;
-            z-index: 5;
+            z-index: 10;
+            transition: background 0.3s;
         }
         
         .page-turn.prev {
@@ -114,34 +159,67 @@
         }
         
         .page-turn:hover {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(245, 211, 147, 0.05);
+        }
+        
+        .page-turn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30px;
+            height: 30px;
+            border-top: 4px solid rgba(245, 211, 147, 0.5);
+            border-right: 4px solid rgba(245, 211, 147, 0.5);
+            transition: border-color 0.3s;
+        }
+        
+        .page-turn.prev::after {
+            left: 20px;
+            transform: translateY(-50%) rotate(-135deg);
+        }
+        
+        .page-turn.next::after {
+            right: 20px;
+            transform: translateY(-50%) rotate(45deg);
+        }
+        
+        .page-turn:hover::after {
+            border-color: rgba(245, 211, 147, 0.9);
         }
         
         .navigation-controls {
-            position: fixed;
+            position: relative;
             bottom: 20px;
             left: 50%;
+            width: 20vw;
+            min-width: 200px;
+
+            justify-content: center;
             transform: translateX(-50%);
-            background-color: rgba(51, 51, 51, 0.8);
+            background-color: rgba(101, 67, 33, 0.8);
             padding: 10px 15px;
             border-radius: 30px;
             z-index: 100;
             display: flex;
             gap: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         
         .navigation-controls button {
-            background-color: #555;
-            color: white;
+            background-color: #4a3015;
+            color: #f5d393;
             border: none;
             padding: 8px 15px;
             border-radius: 20px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            font-family: 'Georgia', serif;
         }
         
         .navigation-controls button:hover {
-            background-color: #777;
+            background-color: #f5d393;
+            color: #4a3015;
+            transform: translateY(-2px);
         }
         
         /* Episode selector */
@@ -153,12 +231,14 @@
         }
         
         .episode-selector select {
-            background-color: #333;
-            color: white;
+            background-color: #654321;
+            color: #f5d393;
             border: none;
             padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
+            font-family: 'Georgia', serif;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
         
         /* Progress indicator */
@@ -167,26 +247,76 @@
             bottom: 0;
             left: 0;
             height: 5px;
-            background-color: #555;
+            background-color: #333;
             width: 100%;
             z-index: 100;
         }
         
         .progress-indicator {
             height: 100%;
-            background-color: #f5a623;
+            background: linear-gradient(to right, #654321, #f5d393);
             transition: width 0.3s;
         }
         
-        /* Page flip animation */
-        .page-flip {
-            animation: flipPage 0.5s ease-in-out;
+        /* Page turn effects */
+        @keyframes pageInFromRight {
+            from { 
+                opacity: 0;
+                transform: translateX(100%) rotateY(30deg);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
         }
         
-        @keyframes flipPage {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1); }
+        @keyframes pageOutToLeft {
+            from { 
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
+            to { 
+                opacity: 0;
+                transform: translateX(-100%) rotateY(-30deg);
+            }
+        }
+        
+        @keyframes pageInFromLeft {
+            from { 
+                opacity: 0;
+                transform: translateX(-100%) rotateY(-30deg);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
+        }
+        
+        @keyframes pageOutToRight {
+            from { 
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
+            to { 
+                opacity: 0;
+                transform: translateX(100%) rotateY(30deg);
+            }
+        }
+        
+        .page-in-from-right {
+            animation: pageInFromRight 0.8s ease forwards;
+        }
+        
+        .page-out-to-left {
+            animation: pageOutToLeft 0.8s ease forwards;
+        }
+        
+        .page-in-from-left {
+            animation: pageInFromLeft 0.8s ease forwards;
+        }
+        
+        .page-out-to-right {
+            animation: pageOutToRight 0.8s ease forwards;
         }
     </style>
 </head>
@@ -265,6 +395,7 @@
         // State variables
         let currentEpisode = 1;
         let currentFrameIndex = 0;
+        let isAnimating = false; // Flag to prevent navigation during animations
         
         // DOM Elements
         const comicContainer = document.getElementById('comic-container');
@@ -316,7 +447,17 @@
                 frameElement.innerHTML = `
                     <div class="frame-content">
                         <div class="frame-info">Frame ${index + 1}</div>
-                        <img src="${frame.src}" alt="Frame ${index + 1}">
+                        <img src="${frame.src}" alt="Frame ${index + 1}" loading="lazy">
+                        <div class="comment-section" id="comment-section-${frame.id}">
+                            <h3>Comments</h3>
+                            <div class="comments-container" id="comments-${frame.id}">
+                                <p class="loading-text">Loading comments...</p>
+                            </div>
+                            <form id="comment-form-${frame.id}" class="comment-form">
+                                <textarea placeholder="Add your comment..."></textarea>
+                                <button type="submit">Post</button>
+                            </form>
+                        </div>
                     </div>
                 `;
                 
@@ -325,23 +466,88 @@
             
             // Reset to first frame
             currentFrameIndex = 0;
-            updateFramePosition();
+            updateFramePosition(false);
+            
+            // Preload adjacent images for smoother transitions
+            preloadAdjacentImages();
+        }
+        
+        // Preload images for smoother transitions
+        function preloadAdjacentImages() {
+            const frames = episodes[currentEpisode].frames;
+            const preloadIndexes = [
+                currentFrameIndex + 1, 
+                currentFrameIndex + 2, 
+                currentFrameIndex - 1
+            ];
+            
+            preloadIndexes.forEach(index => {
+                if (index >= 0 && index < frames.length) {
+                    const img = new Image();
+                    img.src = frames[index].src;
+                }
+            });
         }
         
         // Update frame position
-        function updateFramePosition() {
-            comicContainer.style.transform = `translateX(-${currentFrameIndex * 100}%)`;
+        function updateFramePosition(animate = true) {
+            const frames = document.querySelectorAll('.frame');
+            
+            // Reset all frames
+            frames.forEach((frame, index) => {
+                frame.className = 'frame';
+                
+                if (index < currentFrameIndex) {
+                    frame.classList.add('prev');
+                } else if (index > currentFrameIndex) {
+                    // Leave these with default styling (to the right)
+                }
+            });
+            
+            // Set active frame
+            if (frames[currentFrameIndex]) {
+                frames[currentFrameIndex].className = 'frame active';
+                
+                // Dispatch event for comment system integration
+                const frameId = frames[currentFrameIndex].id;
+                document.dispatchEvent(new CustomEvent('frameChanged', {
+                    detail: { frameId }
+                }));
+            }
+            
+            // Preload next images
+            preloadAdjacentImages();
+            
+            // Update progress indicator
             updateProgressIndicator();
         }
         
-        // Navigation functions
+        // Navigation functions with animations
         function nextFrame() {
+            if (isAnimating) return;
+            
             const totalFrames = episodes[currentEpisode].frames.length;
             
             if (currentFrameIndex < totalFrames - 1) {
-                currentFrameIndex++;
-                animatePageFlip();
-                updateFramePosition();
+                const currentFrame = document.querySelector('.frame.active');
+                const nextFrame = document.querySelectorAll('.frame')[currentFrameIndex + 1];
+                
+                if (currentFrame && nextFrame) {
+                    isAnimating = true;
+                    
+                    // Animate current frame out to left
+                    currentFrame.classList.add('page-out-to-left');
+                    
+                    // Animate next frame in from right
+                    nextFrame.classList.add('page-in-from-right');
+                    
+                    // Wait for animation to complete
+                    setTimeout(() => {
+                        currentFrameIndex++;
+                        updateFramePosition();
+                        isAnimating = false;
+                    }, 800);
+                }
             } else {
                 // Try to move to next episode
                 if (episodes[currentEpisode + 1]) {
@@ -353,10 +559,28 @@
         }
         
         function prevFrame() {
+            if (isAnimating) return;
+            
             if (currentFrameIndex > 0) {
-                currentFrameIndex--;
-                animatePageFlip();
-                updateFramePosition();
+                const currentFrame = document.querySelector('.frame.active');
+                const prevFrame = document.querySelectorAll('.frame')[currentFrameIndex - 1];
+                
+                if (currentFrame && prevFrame) {
+                    isAnimating = true;
+                    
+                    // Animate current frame out to right
+                    currentFrame.classList.add('page-out-to-right');
+                    
+                    // Animate previous frame in from left
+                    prevFrame.classList.add('page-in-from-left');
+                    
+                    // Wait for animation to complete
+                    setTimeout(() => {
+                        currentFrameIndex--;
+                        updateFramePosition();
+                        isAnimating = false;
+                    }, 800);
+                }
             } else {
                 // Try to move to previous episode's last frame
                 if (episodes[currentEpisode - 1]) {
@@ -370,16 +594,19 @@
         }
         
         function goToFirstFrame() {
+            if (isAnimating) return;
             currentFrameIndex = 0;
             updateFramePosition();
         }
         
         function goToLastFrame() {
+            if (isAnimating) return;
             currentFrameIndex = episodes[currentEpisode].frames.length - 1;
             updateFramePosition();
         }
         
         function changeEpisode() {
+            if (isAnimating) return;
             currentEpisode = parseInt(episodeSelect.value);
             loadEpisode(currentEpisode);
         }
@@ -391,16 +618,10 @@
             progressIndicator.style.width = `${progress}%`;
         }
         
-        // Animate page flip
-        function animatePageFlip() {
-            comicContainer.classList.add('page-flip');
-            setTimeout(() => {
-                comicContainer.classList.remove('page-flip');
-            }, 500);
-        }
-        
         // Handle keyboard navigation
         function handleKeyNavigation(e) {
+            if (isAnimating) return;
+            
             switch(e.code) {
                 case 'ArrowRight':
                 case 'Space':
@@ -428,10 +649,12 @@
             let touchEndX = 0;
             
             document.addEventListener('touchstart', e => {
+                if (isAnimating) return;
                 touchStartX = e.changedTouches[0].screenX;
             });
             
             document.addEventListener('touchend', e => {
+                if (isAnimating) return;
                 touchEndX = e.changedTouches[0].screenX;
                 handleSwipe();
             });
@@ -451,5 +674,6 @@
         // Initialize when DOM is fully loaded
         document.addEventListener('DOMContentLoaded', initComicViewer);
     </script>
+    <script src="js/comments.js"></script>
 </body>
 </html>
