@@ -102,7 +102,7 @@
         
         .frame-content {
             max-width: 90%;
-            max-height: 85%;
+            max-height: 90vh;
             position: relative;
             border-radius: 5px;
             overflow: hidden;
@@ -113,6 +113,22 @@
             transform-origin: center center;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #654321 #f5d393;
+        }
+        
+        .frame-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .frame-content::-webkit-scrollbar-track {
+            background: rgba(245, 211, 147, 0.3);
+        }
+        
+        .frame-content::-webkit-scrollbar-thumb {
+            background-color: #654321;
+            border-radius: 0;
         }
         
         .frame:hover .frame-content {
@@ -318,6 +334,100 @@
         .page-out-to-right {
             animation: pageOutToRight 0.8s ease forwards;
         }
+        
+        /* Transcript Styles */
+        .transcript-section {
+            background-color: rgba(245, 211, 147, 0.15);
+            padding: 20px;
+            border-top: 1px solid #654321;
+            border-bottom: 1px solid #654321;
+            font-family: 'Georgia', serif;
+            color: #333;
+        }
+        
+        .transcript-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #654321;
+            text-align: center;
+            font-family: 'Georgia', serif;
+            letter-spacing: 1px;
+        }
+        
+        .transcript-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: justify;
+            color: #333;
+            max-height: 150px;
+            overflow-y: auto;
+            padding: 0 10px;
+            scrollbar-width: thin;
+            scrollbar-color: #654321 #f5d393;
+        }
+        
+        .transcript-text::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .transcript-text::-webkit-scrollbar-track {
+            background: rgba(245, 211, 147, 0.3);
+            border-radius: 4px;
+        }
+        
+        .transcript-text::-webkit-scrollbar-thumb {
+            background-color: #654321;
+            border-radius: 4px;
+        }
+        
+        /* Additional frame content styling for better integration */
+        .frame img {
+            width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            display: block;
+            border-bottom: 1px solid #e5c38350;
+        }
+        
+        /* Transcript toggle button */
+        .transcript-toggle {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #654321;
+            color: #f5d393;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            transition: all 0.3s;
+            z-index: 5;
+        }
+        
+        .transcript-toggle:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+        
+        .transcript-hidden .transcript-section {
+            display: none;
+        }
+        
+        /* Accessibility */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body>
@@ -337,7 +447,8 @@
         </div>
         
         <div class="episode-selector">
-            <select id="episode-select">
+            <label for="episode-select" class="visually-hidden">Select Episode</label>
+            <select id="episode-select" aria-label="Select Episode">
                 <option value="1">Episode 1</option>
                 <option value="2">Episode 2</option>
                 <option value="3">Episode 3</option>
@@ -363,30 +474,102 @@
             1: {
                 title: "Episode 1",
                 frames: [
-                    { id: "frame-1", src: "storyboard/ep-1_sb-1.png" },
-                    { id: "frame-2", src: "storyboard/ep-1_sb-2.png" },
-                    { id: "frame-3", src: "storyboard/ep-1_sb-3.png" },
-                    { id: "frame-4", src: "storyboard/ep-1_sb-4.png" },
-                    { id: "frame-5", src: "storyboard/ep-1_sb-5.png" },
-                    { id: "frame-6", src: "storyboard/ep-1_sb-6.png" },
-                    { id: "frame-7", src: "storyboard/ep-1_sb-7.png" },
-                    { id: "frame-8", src: "storyboard/ep-1_sb-8.png" },
-                    { id: "frame-9", src: "storyboard/ep-1_sb-9.png" },
-                    { id: "frame-10", src: "storyboard/ep-1_sb-10.png" },
-                    { id: "frame-11", src: "storyboard/ep-1_sb-11.png" },
-                    { id: "frame-12", src: "storyboard/ep-1_sb-12.png" },
-                    { id: "frame-12b", src: "storyboard/ep-1_sb-12b.png" },
-                    { id: "frame-13", src: "storyboard/ep-1_sb-13.png" },
-                    { id: "frame-14", src: "storyboard/ep-1_sb-14.png" },
-                    { id: "frame-15", src: "storyboard/ep-1_sb-15.png" },
-                    { id: "frame-16", src: "storyboard/ep-1_sb-16.png" }
+                    { 
+                        id: "frame-1", 
+                        src: "storyboard/ep-1_sb-1.png",
+                        transcript: "In the beginning, there was chaos. From this emerged Brahma, the creator, who set forth to bring order to the universe. In the lands that would become known as Bharata, great kingdoms rose and fell over countless generations."
+                    },
+                    { 
+                        id: "frame-2", 
+                        src: "storyboard/ep-1_sb-2.png",
+                        transcript: "Among these kingdoms was Hastinapur, ruled by the descendants of King Bharata. In time, the throne passed to King Shantanu, who fell deeply in love with a beautiful woman named Ganga."
+                    },
+                    { 
+                        id: "frame-3", 
+                        src: "storyboard/ep-1_sb-3.png",
+                        transcript: "Ganga agreed to marry Shantanu on one condition - that he would never question her actions, no matter how strange they might seem. Blinded by love, Shantanu agreed to this unusual request."
+                    },
+                    { 
+                        id: "frame-4", 
+                        src: "storyboard/ep-1_sb-4.png",
+                        transcript: "In time, Ganga gave birth to a son. But to Shantanu's horror, she took the newborn to the river and drowned him. When this happened with seven children in succession, Shantanu could no longer remain silent."
+                    },
+                    { 
+                        id: "frame-5", 
+                        src: "storyboard/ep-1_sb-5.png",
+                        transcript: "When Shantanu finally questioned her actions, Ganga revealed her true identity as the goddess of the sacred river. The children were incarnations of divine beings under a curse that required them to be returned to the heavens."
+                    },
+                    { 
+                        id: "frame-6", 
+                        src: "storyboard/ep-1_sb-6.png",
+                        transcript: "Before departing, Ganga spared their eighth son, Devavrata, who would grow to become a great warrior and scholar, trained by the greatest sages and teachers of the realm."
+                    },
+                    { 
+                        id: "frame-7", 
+                        src: "storyboard/ep-1_sb-7.png",
+                        transcript: "Years later, King Shantanu fell in love with Satyavati, the daughter of a fisherman. Her father would only allow the marriage if Shantanu promised that Satyavati's son would inherit the throne, not Devavrata."
+                    },
+                    { 
+                        id: "frame-8", 
+                        src: "storyboard/ep-1_sb-8.png",
+                        transcript: "Learning of his father's dilemma, Devavrata made a terrible sacrifice. He vowed never to claim the throne and to remain celibate for life, ensuring that no descendants of his would ever challenge Satyavati's children."
+                    },
+                    { 
+                        id: "frame-9", 
+                        src: "storyboard/ep-1_sb-9.png",
+                        transcript: "This great vow earned him the name Bhishma - 'he of the terrible oath.' The gods showered flowers from heaven, blessing him with the power to choose the time of his own death."
+                    },
+                    { 
+                        id: "frame-10", 
+                        src: "storyboard/ep-1_sb-10.png",
+                        transcript: "Satyavati bore King Shantanu two sons, Chitrangada and Vichitravirya. After Shantanu's death, Chitrangada became king but was killed in battle, leaving his younger brother Vichitravirya to ascend the throne."
+                    },
+                    { 
+                        id: "frame-11", 
+                        src: "storyboard/ep-1_sb-11.png",
+                        transcript: "When Vichitravirya came of age, Bhishma attended the swayamvara of the princesses of Kashi on his behalf. He defeated all the kings and princes present and brought the three princesses - Amba, Ambika, and Ambalika - to Hastinapur."
+                    },
+                    { 
+                        id: "frame-12", 
+                        src: "storyboard/ep-1_sb-12.png",
+                        transcript: "Amba revealed she had already given her heart to King Salva. Bhishma allowed her to return to him, but Salva rejected her, saying he would not accept a woman who had been won by another man."
+                    },
+                    { 
+                        id: "frame-12b", 
+                        src: "storyboard/ep-1_sb-12b.png",
+                        transcript: "Heartbroken and enraged, Amba blamed Bhishma for her fate. She vowed to be the cause of his death and immolated herself, later to be reborn as Shikhandi, who would play a crucial role in Bhishma's fall."
+                    },
+                    { 
+                        id: "frame-13", 
+                        src: "storyboard/ep-1_sb-13.png",
+                        transcript: "Meanwhile, King Vichitravirya married Ambika and Ambalika but died young without producing an heir. To continue the royal line, Satyavati called upon her firstborn son, Vyasa, born before her marriage to Shantanu."
+                    },
+                    { 
+                        id: "frame-14", 
+                        src: "storyboard/ep-1_sb-14.png",
+                        transcript: "Vyasa, a great sage with fearsome appearance, was asked to father children with the widowed queens through the custom of Niyoga. Ambika closed her eyes when she saw him, resulting in a blind son named Dhritarashtra."
+                    },
+                    { 
+                        id: "frame-15", 
+                        src: "storyboard/ep-1_sb-15.png",
+                        transcript: "Ambalika turned pale at the sight of Vyasa, resulting in a pale son named Pandu. Satyavati then sent Ambika's maid to Vyasa, who gave birth to a wise and healthy son named Vidura."
+                    },
+                    { 
+                        id: "frame-16", 
+                        src: "storyboard/ep-1_sb-16.png",
+                        transcript: "Thus began the foundation of a complex bloodline that would shape the destiny of Hastinapur. The blind Dhritarashtra, the pale Pandu, and the wise Vidura - three brothers whose descendants would become central to the great epic of the Mahabharata."
+                    }
                 ]
             },
             // Add more episodes as needed
             2: {
                 title: "Episode 2",
                 frames: [
-                    { id: "frame-1", src: "storyboard/ep-2_sb-1.png" }
+                    { 
+                        id: "frame-1", 
+                        src: "storyboard/ep-2_sb-1.png",
+                        transcript: "The story continues with the next generation of the Kuru dynasty..."
+                    }
                     // Add frames for episode 2
                 ]
             }
@@ -415,6 +598,9 @@
             document.getElementById('btn-next').addEventListener('click', nextFrame);
             document.getElementById('btn-last').addEventListener('click', goToLastFrame);
             episodeSelect.addEventListener('change', changeEpisode);
+            
+            // Set up transcript toggle listeners
+            setupTranscriptToggles();
             
             // Keyboard navigation
             document.addEventListener('keydown', handleKeyNavigation);
@@ -448,6 +634,12 @@
                     <div class="frame-content">
                         <div class="frame-info">Frame ${index + 1}</div>
                         <img src="${frame.src}" alt="Frame ${index + 1}" loading="lazy">
+                        <div class="transcript-section">
+                            <h3>Transcript</h3>
+                            <div class="transcript-text">
+                                ${frame.transcript || "No transcript available."}
+                            </div>
+                        </div>
                         <div class="comment-section" id="comment-section-${frame.id}">
                             <h3>Comments</h3>
                             <div class="comments-container" id="comments-${frame.id}">
@@ -458,6 +650,7 @@
                                 <button type="submit">Post</button>
                             </form>
                         </div>
+                        <button class="transcript-toggle">Toggle Transcript</button>
                     </div>
                 `;
                 
@@ -669,6 +862,24 @@
                     prevFrame();
                 }
             }
+        }
+        
+        // Setup transcript toggle functionality
+        function setupTranscriptToggles() {
+            // Delegate event to document to catch dynamically added buttons
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('transcript-toggle')) {
+                    const frameContent = e.target.closest('.frame-content');
+                    frameContent.classList.toggle('transcript-hidden');
+                    
+                    // Update button text
+                    if (frameContent.classList.contains('transcript-hidden')) {
+                        e.target.textContent = 'Show Transcript';
+                    } else {
+                        e.target.textContent = 'Hide Transcript';
+                    }
+                }
+            });
         }
         
         // Initialize when DOM is fully loaded
