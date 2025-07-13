@@ -1,5 +1,5 @@
 # Episode 1 MVP - One Day Production
-
+ 
 **Goal:** Create a 8-12 minute rough cut of Episode 1 using existing audio and simple visuals
 
 ## HOUR 1: SETUP & PREPARATION

@@ -5,7 +5,7 @@
 **Target Duration:** 8-12 minutes per episode
 **Production Style:** AI-generated animation with podcast narration
 
-## FOUNDATION TASKS
+## FOUNDATION TASKS 
 
 ### Infrastructure Setup
 - [ ] **Audio Processing Infrastructure**
